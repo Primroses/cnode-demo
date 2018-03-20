@@ -1,5 +1,5 @@
 # A project about cnode 
-
+## (ps 特别鸣谢cnode的接口,可能还有一些功能没有写,大家将就着看一下)
 # 用了Vue2.0的全家桶
 - Vue作视图层
 - Vuex做数据流

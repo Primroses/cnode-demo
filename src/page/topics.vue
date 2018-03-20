@@ -19,7 +19,7 @@
         <h2><img :src=item.author.avatar_url></h2>
         <p><span>{{ item.author.loginname }}</span><span class="blue">{{ index }}楼</span><span class="blue">{{ item.last_reply_at|times }}</span></p>
       </div>
-      <div :key="item.author_id" class="topic-word" v-html="item.content">
+      <div :key="item.author_id" class="topic-word markdown-body" v-html="item.content">
 
       </div>
     </template>

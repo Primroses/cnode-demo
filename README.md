@@ -1,9 +1,14 @@
 # A project about cnode 
 
+# 用了Vue2.0的全家桶
+- Vue作视图层
+- Vuex做数据流
+- Vue-Router页面跳转
+- fetch做交互
 
-
-
-
+### (1)实现了有加载的延迟动画
+### (2)下拉刷新
+### (3)返回最上级
 
 
 ## Build Setup

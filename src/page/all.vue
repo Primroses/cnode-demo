@@ -1,7 +1,7 @@
 <template>
-  <div class="toplist clearfix">
-      <template v-for="item in datalist" class="">
-        <router-link :to="{path:'/index/topics?'+item.id}" :key="item.id" class="clearfix">
+  <div class="toplist clearfix" @scroll="scroll($event)" ref="article">
+      <template v-for="(item, index)  in datalist" class="">
+        <router-link :to="{path:'/index/topics?'+item.id}" :key="item.last_reply_at+index"  class="clearfix">
             <div class="content-logo">
               <img :src="item.author.avatar_url">
             </div>
@@ -21,38 +21,79 @@
               <p><span class="word-left">{{`${item.reply_count}/${item.visit_count}`}}</span><span class="word-right">{{item.last_reply_at | times}}</span></p>
             </div>
           </router-link>
-          <div class="line" :key="item.author_id"></div>
         </template>
+        <div @click.stop.prevent="toTop" id="btn">btn</div>
   </div>
 </template>
 <script>
 import { topicList } from "../utils/api";
-import times from '../utils/times'
+import times from "../utils/times";
+import fetchData from "../utils/fetch";
 export default {
   data() {
     return {
-      datalist: []
+      datalist: [],
+      isShowTop: false,
+      page: 1,
+      over: false
     };
   },
   created() {
-    let self = this ;
+    let self = this;
     topicList()
       .then(res => {
         console.log(res);
-        self.datalist = res.data
+        self.datalist = res.data;
       })
       .catch(err => {
         console.log(err);
       });
   },
-  filters:{
-    times(str){
-      return times(str)
+  methods: {
+    scroll(event) {
+      var self = this;
+      if (
+        event.target.scrollTop + event.target.clientHeight ===
+        event.target.scrollHeight
+      ) {
+        fetchData("GET", `topics?limit=50&page=${this.page++}`).then(res => {
+          self.datalist = self.datalist.concat(res.data);
+          console.log(self.datalist);
+        });
+      }
+    },
+    toTop() {
+      // $resf 获取Dom 绑定元素
+      if (this.$refs.article.scrollTop <= 0) {
+        return;
+      }
+      let time = setInterval(() => {
+        if (this.$refs.article.scrollTop <= 0) {
+          clearInterval(time);
+        }
+        this.$refs.article.scrollTop -= 200;
+      }, 1);
+    }
+  },
+  filters: {
+    times(str) {
+      return times(str);
     }
   }
 };
 </script>
 <style lang="less" scoped>
+#btn {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  text-align: center;
+  line-height: 50px;
+  color: gray;
+  position: fixed;
+  right: 0;
+  bottom: 30%;
+}
 .toplist {
   padding-left: 5%;
   width: 90%;
@@ -72,23 +113,23 @@ export default {
   .grade {
     float: left;
     width: 10%;
-    img{
+    img {
       width: 80%;
-      margin:  0 10%;
+      margin: 0 10%;
     }
   }
   .collect-word {
     height: 32px;
     line-height: 32px;
-    p{
+    p {
       font-size: 13px;
     }
-    .word-titile{
+    .word-titile {
       // width: 80%;
-       white-space:nowrap;
-      text-overflow:ellipsis; 
-      -o-text-overflow:ellipsis; 
-      overflow:hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
   .word-left {
@@ -100,7 +141,7 @@ export default {
     float: right;
     margin-right: 20px;
   }
-  .line{
+  .line {
     height: 1px;
     width: 90%;
     margin: 0 5%;
@@ -109,3 +150,4 @@ export default {
   }
 }
 </style>
+

@@ -7,10 +7,14 @@ const good = r =>require.ensure([],()=>r(require('@/page/good')),"good")
 const share = r =>require.ensure([],()=>r(require('@/page/share')),"share")
 const job = r =>require.ensure([],()=>r(require('@/page/job')),"job")
 const topics = r =>require.ensure([],()=>r(require('@/page/topics')),"topics")
+const demo = r =>require.ensure([],()=>r(require('@/page/demo')),"demo")
+
 
 const mine= r =>require.ensure([],()=>r(require('@/page/mine')),"mine")
 const shoucang= r =>require.ensure([],()=>r(require('@/page/shoucang')),"shoucang")
 const message= r =>require.ensure([],()=>r(require('@/page/message')),"mine")
+
+const flash= r =>require.ensure([],()=>r(require('@/components/flash')),"flash")
 
 const routes = [
     {
@@ -66,6 +70,14 @@ const routes = [
     {
         path :'/animate',
         component : animate
+    },
+    {
+        path :'/flash',
+        component : flash
+    },
+    {
+        path : '/demo',
+        component : demo
     }
 
 ]

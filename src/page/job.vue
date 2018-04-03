@@ -21,7 +21,7 @@
               <p><span class="word-left">{{`${item.reply_count}/${item.visit_count}`}}</span><span class="word-right">{{item.last_reply_at | times}}</span></p>
             </div>
           </router-link>
-          <div class="line" :key="item.author_id"></div>
+           <div class="line" :key="item.title"></div>
         </template>
   </div>
 </template>

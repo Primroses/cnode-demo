@@ -19,7 +19,7 @@
         <h2><img :src=item.author.avatar_url></h2>
         <p><span>{{ item.author.loginname }}</span><span class="blue">{{ index }}楼</span><span class="blue">{{ item.last_reply_at|times }}</span></p>
       </div>
-      <div :key="item.author_id" class="topic-word markdown-body" v-html="item.content">
+      <div :key="item.author_id" class="topic-word reply-content markdown-body" v-html="item.content">
 
       </div>
     </template>
@@ -38,16 +38,14 @@ export default {
       top: false,
       good: true,
       showData: false,
-      data_reply:[]
+      data_reply: [],
     };
   },
   methods: {
     goback() {
       this.$router.go(-1);
     },
-    scrollBottom(){
-        console.log(window.screen.height)
-    }
+
   },
   mounted() {
     let id = window.location.href.split("?")[1];
@@ -62,7 +60,6 @@ export default {
       .catch(err => {
         console.log(err);
       });
-      window.addEventListener('scroll', this.scrollBottom)
   },
   filters: {
     times(str) {
@@ -90,13 +87,13 @@ export default {
 .topics {
   height: 500px;
   overflow: scroll;
-  .goback{
+  .goback {
     position: absolute;
     width: 40px;
     height: 40px;
     margin: 5px;
-    border-radius:10px; 
-    color:#67cf22;
+    border-radius: 10px;
+    color: #67cf22;
     border: 1px solid #67cf22;
     text-align: center;
     line-height: 40px;
@@ -111,7 +108,7 @@ export default {
         float: left;
         width: 10%;
         padding-top: 5px;
-        img{
+        img {
           width: 100%;
         }
       }
@@ -132,33 +129,56 @@ export default {
       font-size: 14px;
       color: #d1d1d1;
     }
-    .markdown-body{
+    .markdown-body {
       padding-top: 20px;
       padding-left: 20px;
     }
+    .topic-content {
+      padding: 0.15rem;
+      margin-top: 0.15rem;
+      border-bottom: 1px solid #d4d4d4;
+      // font-size: 0.2rem;
+    }
   }
-  .reply{
+  .reply {
+    font-size: 0.17rem;
     padding-left: 20px;
-    h2{
+    height: 50px;
+    h2 {
       width: 10%;
       float: left;
-      img{
+      img {
         width: 100%;
       }
     }
-    p{
+    p {
       float: left;
-      span{
+      span {
         margin-left: 20px;
       }
-      span.blue{
-        color:skyblue;
+      span.blue {
+        color: skyblue;
+      }
+    }
+    .reply-content {
+      margin-top: 0.15rem;
+      p {
+        img {
+          max-width: 100%;
+          border: 0;
+          vertical-align: middle;
+        }
+      }
+      img {
+        max-width: 100%;
+        border: 0;
+        vertical-align: middle;
       }
     }
   }
-  .topic-word{
+  .topic-word {
     padding-left: 20px;
-     margin: 10px 0;
+    margin: 10px 0;
   }
 }
 </style>

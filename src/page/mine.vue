@@ -54,7 +54,8 @@ export default {
       accesstoken: "cfffbe87-293a-4133-a4e2-4147f3e390f9",
       dataUrl: "",
       datalist: [],
-      showData: false
+      showData: false,
+      isShow : localStorage.getItem('isShow')
     };
   },
   mounted() {

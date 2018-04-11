@@ -12,12 +12,20 @@
           <span>·发布于{{ data_topic.create_at| times}}</span><span>·作者{{ data_topic.author.loginname }}</span>
           <span>·{{ data_topic.visit_count }}浏览</span><span>来自:{{ data_topic.tab | tab }}</span>
         </div>
-        <div class='markdown-body topic-content'  v-html="data_topic.content"></div>
+        <div class='markdown-body'  v-html="data_topic.content"></div>
+    </div>
+    <div class="center">
+       <div class="coll clearfix" @click="collection"><img src="../assets/imgs/shoucang1.png" width="25" height="25">收藏</div> 
+       <div class="replyBtn" @click="reply">回复{{ data_topic.reply_count }}条</div>
+    </div>
+    <div class="reply_centent">
+      <input type="text" placeholder="请输入你的评论">
+      <div class="replyBtn" @click="reply">回复</div>
     </div>
     <template v-for="(item,index) in data_reply">
       <div class="reply clearfix" :key="item.id">
         <h2><img :src=item.author.avatar_url></h2>
-        <p><span>{{ item.author.loginname }}</span><span class="blue">{{ index }}楼</span><span class="blue">{{ item.last_reply_at|times }}</span></p>
+        <p><span>{{ item.author.loginname }}</span><span class="blue">{{ index+1 }}楼</span><span class="blue">{{ item.create_at | times }}</span></p>
       </div>
       <div :key="item.author_id" class="topic-word reply-content markdown-body" v-html="item.content">
 
@@ -38,14 +46,31 @@ export default {
       top: false,
       good: true,
       showData: false,
-      data_reply: [],
+      data_reply: []
     };
   },
   methods: {
     goback() {
       this.$router.go(-1);
     },
+    collection() {
+      let loginState = localStorage.getItem("loginState");
+      if (!loginState) {
+        alert("请先登录");
+        this.$router.push({ path: "/index/mine" });
+      } else {
+        alert("麻烦亲,请登录您的号,进行收藏");
+      }
+    },
+    reply() {
+      fetchData("POST",'/topic',{
+        
+      }).then(res=>{
 
+      }).catch(err=>{
+
+      })
+    }
   },
   mounted() {
     let id = window.location.href.split("?")[1];
@@ -115,10 +140,10 @@ export default {
       .top-title {
         width: 100%;
         height: 35px;
-        line-height: 35px;
-        font-size: 14px;
+        line-height: 25px;
+        font-size: 16px;
         float: left;
-        text-align: center;
+        // text-align: center;
       }
     }
     .top-config {
@@ -130,14 +155,54 @@ export default {
       color: #d1d1d1;
     }
     .markdown-body {
-      padding-top: 20px;
-      padding-left: 20px;
+      padding: 10px;
     }
-    .topic-content {
-      padding: 0.15rem;
-      margin-top: 0.15rem;
-      border-bottom: 1px solid #d4d4d4;
-      // font-size: 0.2rem;
+  }
+  .center {
+    width: 80%;
+    margin: 0 10%;
+    display: flex;
+    justify-content: space-between;
+    line-height: 25px;
+    .coll {
+      img {
+        // padding-top: 10px;
+        float: left;
+      }
+      line-height: 25px;
+      height: 25px;
+    }
+    .replyBtn {
+      font-size: 16px;
+      width: 70px;
+      height: 25px;
+      background-color: #67cf22;
+      color: white;
+      text-align: center;
+    }
+  }
+  .reply_centent {
+    border: 1px solid #67cf22;
+    margin: 20px 0;
+    height: 50px;
+    width: 79%;
+    padding: 0 10%;
+    display: flex;
+    justify-content: space-between;
+    input {
+      border: 0px;
+      outline: none;
+      border-bottom: 1px solid black;
+      margin-bottom: 10px;
+    }
+    .replyBtn {
+      font-size: 16px;
+      width: 70px;
+      height: 25px;
+      line-height: 25px;
+      background-color: white;
+      margin-top: 10px;
+      text-align: center;
     }
   }
   .reply {
@@ -179,6 +244,7 @@ export default {
   .topic-word {
     padding-left: 20px;
     margin: 10px 0;
+    border-bottom: 1px solid #d1d1d1;
   }
 }
 </style>

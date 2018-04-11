@@ -14,7 +14,7 @@
             </div>
       </router-link>
 
-       <router-link :to="{path : '/theme'}">
+       <router-link :to="{path : '/index/newTopic'}">
             <div class="nav-block">
             <h1 class=" icon"><img src="../assets/imgs/add1.png"></h1>
             </div>
@@ -58,7 +58,7 @@ export default {
   bottom: 0px;
   left: 0px;
   border-top: 1px solid #67cf22;
-  padding-top: 10px;
+  padding-top: 5px;
   .nav-block {
     width: 20%;
     float: left;

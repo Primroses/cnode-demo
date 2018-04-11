@@ -22,7 +22,9 @@
             </div>
           </router-link>
         </template>
-        <div @click.stop.prevent="toTop" id="btn">btn</div>
+        <div @click.stop.prevent="toTop" id="btn">
+          <img src="../assets/imgs/toTop.png" v-show="isShowTop">
+        </div>
   </div>
 </template>
 <script>
@@ -61,6 +63,11 @@ export default {
           console.log(self.datalist);
         });
       }
+      if(event.target.scrollTop>100){
+        self.isShowTop = true;
+      }else if(event.target.scrollTop === 0){
+        self.isShowTop = false;
+      }
     },
     toTop() {
       // $resf 获取Dom 绑定元素
@@ -86,7 +93,7 @@ export default {
 #btn {
   width: 50px;
   height: 50px;
-  background-color: red;
+  // background-color: red;
   text-align: center;
   line-height: 50px;
   color: gray;

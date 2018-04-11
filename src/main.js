@@ -33,20 +33,20 @@ const router = new Router({
 	}
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.path != '/index/mine') {
-    if (localStorage.getItem("loginState")) {
-      next();
-    } else {
-      alert("请先登录~")
-      next('/index/mine')
-      query: { redirect: to.fullPath }
-    }
-  }
-  else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.path != '/index/mine') {
+//     if (localStorage.getItem("loginState")) {
+//       next();
+//     } else {
+//       alert("请先登录~")
+//       next('/index/mine')
+//       query: { redirect: to.fullPath }
+//     }
+//   }
+//   else {
+//     next()
+//   }
+// })
 
 new Vue({
   el: '#app',
